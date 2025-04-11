@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from models import UserFeedback
-from serializers.userfeedback_serializer import UserfeedbackSerializer
+from api.models import UserFeedback
+from api.serializers.userfeedback_serializer import UserfeedbackSerializer
 
 class UserfeedbackViewSet(viewsets.ModelViewSet):
     queryset = UserFeedback.objects.all()

@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from models import NewsArticle
-from serializers.newsarticle_serializer import NewsarticleSerializer
+from api.models import NewsArticle
+from api.serializers.newsarticle_serializer import NewsarticleSerializer
 
 class NewsarticleViewSet(viewsets.ModelViewSet):
     queryset = NewsArticle.objects.all()

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import UserFeedback
+from api.models import UserFeedback
 
 class UserfeedbackSerializer(serializers.ModelSerializer):
     model = UserFeedback

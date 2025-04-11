@@ -1,6 +1,6 @@
 from rest_framework.permissions import IsAuthenticated
-from models import CryptoAsset
-from serializers.cryptoasset_serializer import CryptoassetSerializer
+from api.models import CryptoAsset
+from api.serializers.cryptoasset_serializer import CryptoassetSerializer
 from rest_framework import viewsets
 
 class CryptoassetViewSet(viewsets.ModelViewSet):

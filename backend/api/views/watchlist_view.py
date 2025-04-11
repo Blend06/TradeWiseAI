@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from models import WatchList
-from serializers.watchlist_serializer import WatchlistSerializer
+from api.models import WatchList
+from api.serializers.watchlist_serializer import WatchlistSerializer
 
 class WatchlistViewSet(viewsets.ModelViewSet):
     queryset = WatchList.objects.all()

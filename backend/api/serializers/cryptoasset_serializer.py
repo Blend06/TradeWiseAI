@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import CryptoAsset
+from api.models import CryptoAsset
 
 class CryptoassetSerializer(serializers.ModelSerializer):
     model = CryptoAsset
