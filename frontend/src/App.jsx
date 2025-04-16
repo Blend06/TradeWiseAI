@@ -1,35 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import AppRoute from './utils/AppRoute';
+import ScrollReveal from './utils/ScrollReveal';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Layouts
+import LayoutDefault from './layouts/LayoutDefault';
+import LayoutAlternative from './layouts/LayoutAlternative';
+import LayoutSignin from './layouts/LayoutSignin';
 
+// Views 
+import Home from './views/Home';
+import Secondary from './views/Secondary';
+import Login from './views/Login';
+import Signup from './views/Signup';
+
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <ScrollReveal>
+      <Routes>
+        <Route path="/" element={<AppRoute component={Home} layout={LayoutDefault} />} />
+        <Route path="/secondary" element={<AppRoute component={Secondary} layout={LayoutAlternative} />} />
+        <Route path="/login" element={<AppRoute component={Login} layout={LayoutSignin} />} />
+        <Route path="/signup" element={<AppRoute component={Signup} layout={LayoutSignin} />} />
+      </Routes>
+    </ScrollReveal>
+  );
+};
 
-export default App
+export default App;
