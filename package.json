@@ -5,6 +5,7 @@
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react-router-dom": "^7.5.0",
+    "sass": "^1.86.3",
     "scrollreveal": "^4.0.9"
   }
 }
