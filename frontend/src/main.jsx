@@ -1,14 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client'; // Make sure to import from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
+// src/views/Main.jsx
+import React from "react";
+import { Navigation } from "../components/navigation";
+import { Header } from "../components/header";
+import { Features } from "../components/features";
+import { About } from "../components/about";
+import { Services } from "../components/services";
+import { Contact } from "../components/contact";
+import JsonData from "../data/data.json";
 
-import App from './App'; // Import App component
-import './assets/scss/style.scss';
+const Main = () => {
+  return (
+    <div>
+      <Navigation />
+      <Header data={JsonData.Header} />
+      <Features data={JsonData.Features} />
+      <About data={JsonData.About} />
+      <Services data={JsonData.Services} />
+      <Contact data={JsonData.Contact} />
+    </div>
+  );
+};
 
-const root = ReactDOM.createRoot(document.getElementById('root')); // Create root element
-
-root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-);
+export default Main;

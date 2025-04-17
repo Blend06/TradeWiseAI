@@ -1,8 +1,23 @@
-.reveal {
-    opacity: 0; /* Start with hidden elements */
-    transition: opacity 1s ease;
+@media screen and (max-width: 400px) {
+  #features, #about, #services, #testimonials, 
+  #team, #contact, #footer, #portfolio {
+    width: 100%; /* Fix overflow */
+    padding: 20px;
   }
   
-  .reveal.visible {
-    opacity: 1; /* Reveal the element */
+  .container {
+    width: 100%;
+    max-width: 1200px; /* Optional */
+    margin: 0 auto;
   }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Prevents extra spacing issues */
+  }
+  
+  body {
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+  }
+}
