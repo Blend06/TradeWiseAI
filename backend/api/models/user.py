@@ -12,7 +12,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
         user = self.model(username=username, email=email, **extra_fields)
-        user.set_password(password)
+        user.set_password(password)  # Django will handle password hashing
         user.save(using=self._db)
         return user
 
@@ -29,10 +29,10 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
-    Userid = models.AutoField(primary_key=True)  
+    Userid = models.AutoField(primary_key=True)
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
+    # Removed the password field here, Django already has it via AbstractBaseUser
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)

@@ -7,8 +7,7 @@ const Register = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
+  
 
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -16,26 +15,21 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const username = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    const firstName = firstNameRef.current.value;
-    const lastName = lastNameRef.current.value;
-
+  
     try {
       await axios.post('http://127.0.0.1:8000/api/users/', {
         username,
         email,
-        password,
-        firstName,
-        lastName,
+        password
       });
-
+  
       setErrorMessage('');
       setSuccessMessage('User registered successfully!');
       setTimeout(() => navigate('/login'), 1500);
-
     } catch (error) {
       setSuccessMessage('');
       setErrorMessage(
@@ -76,28 +70,7 @@ const Register = () => {
                 />
               </div>
 
-              <div className="input-box mb-3">
-                <input
-                  ref={firstNameRef}
-                  type="text"
-                  className="form-control"
-                  id="firstName"
-                  placeholder="First Name"
-                  required
-                />
-              </div>
-
-              <div className="input-box mb-3">
-                <input
-                  ref={lastNameRef}
-                  type="text"
-                  className="form-control"
-                  id="lastName"
-                  placeholder="Last Name"
-                  required
-                />
-              </div>
-
+             
               <div className="input-box mb-3">
                 <input
                   ref={emailRef}
