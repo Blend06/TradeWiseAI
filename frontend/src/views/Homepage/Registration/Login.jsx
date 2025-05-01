@@ -20,7 +20,7 @@ const Login = () => {
 
     try {
       // Get tokens from /api/login/
-      const response = await axios.post('http://127.0.0.1:8000/api/users/', {
+      const response = await axios.post('http://127.0.0.1:8000/api/token/', {
         username,
         password,
       });
@@ -29,7 +29,7 @@ const Login = () => {
       localStorage.setItem('refreshToken', refresh);
 
       // Check staff status
-      const meResponse = await axios.get('http://127.0.0.1:8000/api/me/', {
+      const meResponse = await axios.get('http://127.0.0.1:8000/api/users/me/', {
         headers: { Authorization: `Bearer ${access}` },
       });
       setLoading(false);
@@ -91,7 +91,7 @@ const Login = () => {
               />
             </div>
 
-            <button type="submit" className="submit-button btn btn-primary w-100">
+            <button type="submit" className="submit-button btn btn-primary w-100" disabled={loading}>
               {loading ? 'Loading...' : 'Login'}
             </button>
 
