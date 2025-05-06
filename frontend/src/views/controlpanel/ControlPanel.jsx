@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosClient from '../../utils/api';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -30,9 +30,8 @@ const ControlPanel = () => {
 
       try {
         // Check staff status
-        const userResponse = await axios.get('http://127.0.0.1:8000/api/me/', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const userResponse = await axiosClient.get('/users/me/')
+
         if (!userResponse.data.is_staff) {
           alert('Unauthorized access.');
           navigate('/');
@@ -40,13 +39,12 @@ const ControlPanel = () => {
         }
 
         // Fetch admin data
-        const dashboardResponse = await axios.get('http://127.0.0.1:8000/api/control-panel-data/', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const dashboardResponse = await axiosClient.get('/control-panel-data/');
+
         setData(dashboardResponse.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
-        navigate('/');
+        console.log('Error fetching data: ', error);
+        navigate('/')
       }
     };
 

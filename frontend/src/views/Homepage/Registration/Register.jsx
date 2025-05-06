@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import axios from 'axios';
+import axiosClient from '../../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import './css/register.css';
 
@@ -7,26 +7,24 @@ const Register = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-  
-
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     const username = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-  
+    if (!passwordRegex.test(password)) {
+      setErrorMessage(
+        'Password must be at least 8 characters long and include both letters and numbers.'
+      );
+      return;
+    }
     try {
-      await axios.post('http://127.0.0.1:8000/api/users/', {
-        username,
-        email,
-        password
-      });
-  
+      await axiosClient.post('/users/', { username, email, password });
       setErrorMessage('');
       setSuccessMessage('User registered successfully!');
       setTimeout(() => navigate('/login'), 1500);
@@ -57,7 +55,7 @@ const Register = () => {
       <div className="wrapper">
         <div className="form-box">
           <div className="card-body">
-            <h2 style={{color: '#178ca4'}}>Register</h2>
+            <h2 style={{ color: '#178ca4' }}>Register</h2>
             <form onSubmit={handleSubmit}>
               <div className="input-box mb-3">
                 <input
@@ -69,8 +67,6 @@ const Register = () => {
                   required
                 />
               </div>
-
-             
               <div className="input-box mb-3">
                 <input
                   ref={emailRef}
@@ -81,7 +77,6 @@ const Register = () => {
                   required
                 />
               </div>
-
               <div className="input-box mb-3">
                 <input
                   ref={passwordRef}
@@ -90,16 +85,15 @@ const Register = () => {
                   id="password"
                   placeholder="Password"
                   required
+                  onChange={() => setErrorMessage('')}
                 />
               </div>
-
               <button
                 type="submit"
                 className="submit-button btn btn-primary w-100"
               >
                 Register
               </button>
-
               {successMessage && (
                 <p className="text-success mt-3 text-center">
                   {successMessage}

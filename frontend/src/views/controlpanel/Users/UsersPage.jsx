@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosClient from '../../../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 const UsersPage = () => {
@@ -9,69 +9,33 @@ const UsersPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        alert('No access token found.');
-        navigate('/');
-        return;
-      }
-
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/users/', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUsers(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching users:', err);
-        setError('Failed to load users data');
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
+    axiosClient.get('/users/')
+      .then(({ data }) => setUsers(data))
+      .catch(() => setError('Failed to load users data'))
+      .finally(() => setLoading(false));
   }, [navigate]);
 
-  const handleDelete = async (userId) => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      alert('No access token found.');
+  const handleDelete = async userId => {
+    
+    if (!window.confirm('⚠️ Are you sure you want to delete this user?')) 
       return;
-    }
-
+    
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/users/${userId}/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setUsers(users.filter((user) => user.id !== userId));
-    } catch (err) {
-      console.error('Error deleting user:', err);
+      await axiosClient.delete(`/users/${userId}/`);
+      setUsers(users.filter(u => u.Userid !== userId));
+    } catch {
       alert('Failed to delete user');
     }
   };
 
-  const handleAdd = () => {
-    navigate('/users/new');
-  };
-
-  const handleEdit = (userId) => {
-    navigate(`/users/edit/${userId}`);
-  };
-
-  if (loading) {
-    return <div>Loading users...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div>Loading users…</div>;
+  if (error)   return <div>{error}</div>;
 
   return (
     <div className="container py-4">
       <h1 className="text-center mb-4 fw-bold text-danger">Manage Users</h1>
 
-      <button className="btn btn-primary mb-3" onClick={handleAdd}>
+      <button className="btn btn-primary mb-3" onClick={() => navigate('/users/new')}>
         Create New User
       </button>
 
@@ -80,35 +44,30 @@ const UsersPage = () => {
           <table className="table table-bordered table-striped">
             <thead>
               <tr>
-                {/* Adjust the columns you want to display */}
-                <th>ID</th>
+                <th>Userid</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>First Name</th>
-                <th>Last Name</th>
                 <th>Is Staff</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
-                  <td>{user.first_name}</td>
-                  <td>{user.last_name}</td>
-                  <td>{user.is_staff ? 'Yes' : 'No'}</td>
+              {users.map(u => (
+                <tr key={u.Userid}>
+                  <td>{u.Userid}</td>
+                  <td>{u.username}</td>
+                  <td>{u.email}</td>
+                  <td>{u.is_staff ? 'Yes' : 'No'}</td>
                   <td>
                     <button
                       className="btn btn-warning mx-1"
-                      onClick={() => handleEdit(user.id)}
+                      onClick={() => navigate(`/users/edit/${u.Userid}`)}
                     >
                       Edit
                     </button>
                     <button
                       className="btn btn-danger mx-1"
-                      onClick={() => handleDelete(user.id)}
+                      onClick={() => handleDelete(u.Userid)}
                     >
                       Delete
                     </button>

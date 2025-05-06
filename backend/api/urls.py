@@ -9,7 +9,7 @@ from api.views.userfeedback_view import UserfeedbackViewSet
 from api.views.watchlist_view import WatchlistViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.views.decorators.csrf import csrf_exempt
-
+from api.views.controlpanel_view import ControlPanelView
 router = DefaultRouter()
 
 router.register(r'users', UserViewSet)
@@ -22,7 +22,7 @@ router.register(r'watchlist', WatchlistViewSet)
 urlpatterns = [
      path('', include(router.urls)),
 
-
+     path('control-panel-data/', ControlPanelView.as_view(), name='control-panel-data'),
      path('token/',          csrf_exempt(TokenObtainPairView.as_view()), name='token_obtain_pair'),
      path('api/token/refresh/', TokenRefreshView.as_view(),    name='token_refresh'),
 
