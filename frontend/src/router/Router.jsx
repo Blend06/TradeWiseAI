@@ -6,6 +6,8 @@ import Register from "../views/Homepage/Registration/Register";
 import ControlPanel from "../views/controlpanel/ControlPanel";
 import UsersPage from "../views/controlpanel/Users/UsersPage";
 import UsersForm from "../views/controlpanel/Users/UsersForm";
+import NewsPage from "../views/controlpanel/News/NewsPage";
+import NewsForm from "../views/controlpanel/News/NewsForm";
 
 const AppRouter = () => {
   return (
@@ -19,6 +21,9 @@ const AppRouter = () => {
         <Route path="/users"               element={<UsersPage />} />
         <Route path="/users/new"           element={<UsersForm />} />
         <Route path="/users/edit/:userId"  element={<UsersForm />} />
+        <Route path="/news"               element={<NewsPage />} />
+        <Route path="/news/new"           element={<NewsForm />} />
+        <Route path="/news/edit/:NewsArticleId"  element={<NewsForm />} />
         
 
       </Routes>

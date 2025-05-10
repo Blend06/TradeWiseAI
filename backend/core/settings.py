@@ -75,6 +75,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
 }
 
 from datetime import timedelta
@@ -165,3 +168,6 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'Userid',
     'USER_ID_CLAIM': 'user_id',
  }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
