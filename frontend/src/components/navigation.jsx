@@ -41,12 +41,10 @@ export const Navigation = () => {
         </Link>
         <div style={{ display: "flex", alignItems: "center" }}>
           <ul className="nav navbar-nav" style={{ marginBottom: 0, display: "flex", alignItems: "center" }}>
-            <li><a href="#portfolio" className="page-scroll" style={{ padding: "10px 15px" }}>Gallery</a></li>
             <li><a href="#features" className="page-scroll" style={{ padding: "10px 15px" }}>Features</a></li>
+            <li><a href="#news" className="page-scroll" style={{ padding: "10px 15px" }}>News</a></li>
+            <li><a href="#feedback" className="page-scroll" style={{ padding: "10px 15px" }}>Feedback</a></li>
             <li><a href="#about" className="page-scroll" style={{ padding: "10px 15px" }}>About</a></li>
-            <li><a href="#services" className="page-scroll" style={{ padding: "10px 15px" }}>Services</a></li>
-            <li><a href="#contact" className="page-scroll" style={{ padding: "10px 15px" }}>Contact</a></li>
-
             {user ? (
               <>
                 <li>

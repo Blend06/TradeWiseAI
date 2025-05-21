@@ -2,5 +2,6 @@ from rest_framework import serializers
 from api.models import UserFeedback
 
 class UserfeedbackSerializer(serializers.ModelSerializer):
-    model = UserFeedback
-    fields = '__all__'
+    class Meta:
+        model = UserFeedback
+        fields = '__all__'

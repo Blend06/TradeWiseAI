@@ -19,7 +19,7 @@ useEffect(() => {
 }, []);
 
   return (
-    <div id="portfolio" className="text-center">
+    <div id="news" className="text-center">
       <div className="container">
         <div className="section-title">
           <h2>News Articles</h2>

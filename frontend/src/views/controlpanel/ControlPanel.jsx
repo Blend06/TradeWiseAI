@@ -30,7 +30,7 @@ const ControlPanel = () => {
 
       try {
         // Check staff status
-        const userResponse = await axiosClient.get('/users/me/')
+        const userResponse = await axiosClient.get('/users/me/');
 
         if (!userResponse.data.is_staff) {
           alert('Unauthorized access.');
@@ -40,11 +40,10 @@ const ControlPanel = () => {
 
         // Fetch admin data
         const dashboardResponse = await axiosClient.get('/control-panel-data/');
-
         setData(dashboardResponse.data);
       } catch (error) {
         console.log('Error fetching data: ', error);
-        navigate('/')
+        navigate('/');
       }
     };
 
@@ -52,21 +51,16 @@ const ControlPanel = () => {
   }, [navigate]);
 
   const chartData = {
-    labels: [
-      'Users',
-      'News',
-    ],
+    labels: ['Users', 'News', 'Feedbacks'],
     datasets: [
       {
         label: 'Counts',
         data: [
           data.total_users || 0,
           data.total_news || 0,
+          data.total_feedbacks || 0,
         ],
-        backgroundColor: [
-          '#007bff',
-          '#6610f2',
-        ],
+        backgroundColor: ['#007bff', '#6610f2', '#28a745'],
         borderColor: '#ffffff',
         borderWidth: 1,
       },
@@ -97,7 +91,9 @@ const ControlPanel = () => {
         <button className="btn btn-outline-primary" onClick={() => navigate('/users')}>
           Manage Users
         </button>
-       
+        <button className="btn btn-outline-primary" onClick={() => navigate('/userfeedback')}>
+          Manage Feedbacks
+        </button>
       </div>
 
       <div className="card shadow mb-5">
@@ -112,6 +108,7 @@ const ControlPanel = () => {
           <ul className="list-group">
             <li className="list-group-item">Total Users: {data.total_users || 0}</li>
             <li className="list-group-item">Total News: {data.total_news || 0}</li>
+            <li className="list-group-item">Total Feedbacks: {data.total_feedbacks || 0}</li>
           </ul>
 
           <div className="text-center mt-4">

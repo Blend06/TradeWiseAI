@@ -8,6 +8,8 @@ import UsersPage from "../views/controlpanel/Users/UsersPage";
 import UsersForm from "../views/controlpanel/Users/UsersForm";
 import NewsPage from "../views/controlpanel/News/NewsPage";
 import NewsForm from "../views/controlpanel/News/NewsForm";
+import UserFeedbackPage from "../views/controlpanel/Feedbacks/UserFeedbackPage";
+import UserFeedbackForm from "../views/controlpanel/Feedbacks/UserFeedbackForm";
 
 const AppRouter = () => {
   return (
@@ -24,6 +26,9 @@ const AppRouter = () => {
         <Route path="/news"               element={<NewsPage />} />
         <Route path="/news/new"           element={<NewsForm />} />
         <Route path="/news/edit/:NewsArticleId"  element={<NewsForm />} />
+        <Route path="/userfeedback" element={<UserFeedbackPage />} />
+        <Route path="/userfeedback/new" element={<UserFeedbackForm />} />
+        <Route path="/userfeedback/edit/:UserFeedbackId" element={<UserFeedbackForm />} />
         
 
       </Routes>
