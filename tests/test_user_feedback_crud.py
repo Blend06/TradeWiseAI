@@ -16,14 +16,14 @@ class FeedbackCRUDTest(unittest.TestCase):
         driver.find_element(By.ID, "username").send_keys("admin")
         driver.find_element(By.ID, "password").send_keys("ubtubt123")
         driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
-        time.sleep(2)
+        time.sleep(3)
 
     def test_crud_feedback(self):
         driver = self.driver
 
         # === CREATE ===
         driver.get("http://localhost:3000/userfeedback/new")
-        time.sleep(1)
+        time.sleep(2)
 
         # Fill form with new data
         select = Select(driver.find_element(By.NAME, "user"))
