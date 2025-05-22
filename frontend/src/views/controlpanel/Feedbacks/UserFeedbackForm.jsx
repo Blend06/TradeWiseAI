@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axiosClient from '../../../utils/api';
 
 const UserFeedbackForm = () => {
-  const { FeedbackId } = useParams();
+  const { UserFeedbackId  } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -31,9 +31,9 @@ const UserFeedbackForm = () => {
 
   // Load feedback if editing
   useEffect(() => {
-    if (!FeedbackId) return;
+    if (!UserFeedbackId ) return;
     setLoading(true);
-    axiosClient.get(`/userfeedback/${FeedbackId}/`)
+    axiosClient.get(`/userfeedback/${UserFeedbackId }/`)
       .then(({ data }) => {
         setFormData({
           user: data.user,
@@ -43,7 +43,7 @@ const UserFeedbackForm = () => {
       })
       .catch(() => setError('Failed to load feedback'))
       .finally(() => setLoading(false));
-  }, [FeedbackId]);
+  }, [UserFeedbackId ]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -54,8 +54,8 @@ const UserFeedbackForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (FeedbackId) {
-        await axiosClient.patch(`/userfeedback/${FeedbackId}/`, formData);
+      if (UserFeedbackId ) {
+        await axiosClient.patch(`/userfeedback/${UserFeedbackId }/`, formData);
         alert('Feedback updated successfully!');
       } else {
         await axiosClient.post('/userfeedback/', formData);
@@ -76,7 +76,7 @@ const UserFeedbackForm = () => {
   return (
     <div className="container py-4">
       <h1 className="text-center mb-4 fw-bold text-primary">
-        {FeedbackId ? 'Edit Feedback' : 'Submit Feedback'}
+        {UserFeedbackId  ? 'Edit Feedback' : 'Submit Feedback'}
       </h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -127,7 +127,7 @@ const UserFeedbackForm = () => {
           </select>
         </div>
         <button type="submit" className="btn btn-success">
-          {FeedbackId ? 'Update Feedback' : 'Submit Feedback'}
+          {UserFeedbackId  ? 'Update Feedback' : 'Submit Feedback'}
         </button>
       </form>
     </div>

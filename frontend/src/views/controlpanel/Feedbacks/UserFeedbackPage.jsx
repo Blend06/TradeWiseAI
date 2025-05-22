@@ -58,13 +58,13 @@ const UserFeedbackPage = () => {
                   <td>
                     <button
                       className="btn btn-warning mx-1"
-                      onClick={() => navigate(`/userfeedback/edit/${fb.FeedbackId}`)}
+                      onClick={() => navigate(`/userfeedback/edit/${fb.UserFeedbackId}`)}
                     >
                       Edit
                     </button>
                     <button
                       className="btn btn-danger mx-1"
-                      onClick={() => handleDelete(fb.FeedbackId)}
+                      onClick={() => handleDelete(fb.UserFeedbackId)}
                     >
                       Delete
                     </button>
