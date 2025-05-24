@@ -1,5 +1,4 @@
-import unittest
-import time
+import unittest, time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
@@ -10,78 +9,68 @@ class FeedbackCRUDTest(unittest.TestCase):
         self.driver.maximize_window()
         self.driver.get("http://localhost:3000/login")
         time.sleep(1)
-        
-        # Login
-        driver = self.driver
-        driver.find_element(By.ID, "username").send_keys("admin")
-        driver.find_element(By.ID, "password").send_keys("ubtubt123")
-        driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+
+        # login
+        self.driver.find_element(By.ID, "username").send_keys("admin")
+        self.driver.find_element(By.ID, "password").send_keys("ubtubt123")
+        self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
         time.sleep(3)
 
     def test_crud_feedback(self):
-        driver = self.driver
+        d = self.driver
 
         # === CREATE ===
-        driver.get("http://localhost:3000/userfeedback/new")
+        d.get("http://localhost:3000/userfeedback/new")
         time.sleep(2)
 
-        # Fill form with new data
-        select = Select(driver.find_element(By.NAME, "user"))
-        select.select_by_value("1")
-        driver.find_element(By.NAME, "message").send_keys("Ky është një feedback test nga Selenium")
-        select = Select(driver.find_element(By.NAME, "feedback_type"))
-        select.select_by_value("suggestion")
-        driver.find_element(By.TAG_NAME, "form").submit()
-        time.sleep(2)
+        # pick first real user in dropdown
+        sel_user = Select(d.find_element(By.NAME, "user"))
+        first_val = [o.get_attribute("value") for o in sel_user.options if o.get_attribute("value")][0]
+        sel_user.select_by_value(first_val)
+
+        ts           = int(time.time())
+        msg_original = f"Selenium feedback {ts}"
+        d.find_element(By.NAME, "message").send_keys(msg_original)
+
+        Select(d.find_element(By.NAME, "feedback_type")).select_by_value("suggestion")
+        d.find_element(By.TAG_NAME, "form").submit()
+        time.sleep(3)
 
         try:
-            alert = driver.switch_to.alert
-            alert.accept()
-        except:
-            pass
+            d.switch_to.alert.accept()
+        except: pass
 
-        time.sleep(1)
-        self.assertIn("userfeedback", driver.current_url)
+        self.assertIn("/userfeedback", d.current_url)
+        self.assertIn(msg_original, d.page_source)
 
         # === READ ===
-        driver.get("http://localhost:3000/userfeedback")
-        time.sleep(1)
-
-        # Check if the feedback exists in the list
-        self.assertIn("Ky është një feedback test nga Selenium", driver.page_source)
+        d.get("http://localhost:3000/userfeedback")
+        time.sleep(2)
+        self.assertIn(msg_original, d.page_source)
 
         # === UPDATE ===
-        # Click the first "Edit" button (assumed the one just created)
-        edit_button = driver.find_element(By.XPATH, "//button[text()='Edit']")
-        edit_button.click()
-        time.sleep(1)
-
-        # Update only the `message` field
-        message_input = driver.find_element(By.NAME, "message")
-        message_input.clear()
-        message_input.send_keys("Feedback i përditësuar nga Selenium")
-        driver.find_element(By.TAG_NAME, "form").submit()
+        d.find_element(By.XPATH, f"//tr[td/text()='{msg_original}']//button[text()='Edit']").click()
         time.sleep(2)
-        
+        msg_updated = f"Përditësuar me Selenium {ts}"
+        m = d.find_element(By.NAME, "message")
+        m.clear()
+        m.send_keys(msg_updated)
+        d.find_element(By.TAG_NAME, "form").submit()
+        time.sleep(3)
+
         try:
-            alert = driver.switch_to.alert
-            alert.accept()
-        except:
-            pass
-        time.sleep(1)
-        # Verify the update is reflected
-        self.assertIn("Feedback i përditësuar nga Selenium", driver.page_source)
+            d.switch_to.alert.accept()
+        except: pass
+
+        self.assertIn("/userfeedback", d.current_url)
+        self.assertIn(msg_updated, d.page_source)
 
         # === DELETE ===
-        driver.get("http://localhost:3000/userfeedback")
-        time.sleep(1)
-
-        # Inject JavaScript to override confirm() and always return true
-        driver.execute_script("window.confirm = function(){ return true; }")
-
-        delete_button = driver.find_element(By.XPATH, "//button[text()='Delete']")
-        delete_button.click()
+        d.get("http://localhost:3000/userfeedback")
         time.sleep(2)
+        d.execute_script("window.confirm = () => true;")
+        d.find_element(By.XPATH, f"//tr[td/text()='{msg_updated}']//button[text()='Delete']").click()
+        time.sleep(3)
 
     def tearDown(self):
         self.driver.quit()
