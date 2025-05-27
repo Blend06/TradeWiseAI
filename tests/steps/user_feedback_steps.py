@@ -2,8 +2,36 @@ from behave import given, when, then
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.alert import Alert
+from selenium.common.exceptions import UnexpectedAlertPresentException
+
 
 BASE_URL = "http://localhost:3000"
+
+@given('I am logged in as admin for feedbacks')
+def step_impl(context):
+    context.browser.get("http://localhost:3000/login")
+
+    WebDriverWait(context.browser, 10).until(
+        EC.presence_of_element_located((By.ID, "username"))
+    )
+
+    context.browser.find_element(By.ID, "username").send_keys("admin")
+    context.browser.find_element(By.ID, "password").send_keys("ubtubt123")
+
+    context.browser.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+
+    # Wait for login success
+    WebDriverWait(context.browser, 10).until(
+        EC.url_to_be("http://localhost:3000/")
+    )
+
+    # Redirect to feedback page right after login
+    context.browser.get("http://localhost:3000/userfeedback")
+
+    WebDriverWait(context.browser, 10).until(
+        EC.presence_of_element_located((By.TAG_NAME, "table"))
+    )
 
 @given('I am on the User Feedback list page')
 def step_impl(context):
@@ -63,9 +91,24 @@ def step_impl(context, user_id, message, feedback_type):
 def step_impl(context):
     submit_btn = context.browser.find_element(By.CSS_SELECTOR, "button[type='submit']")
     submit_btn.click()
-    # Wait for the URL to change back to the list page after submission
-    WebDriverWait(context.browser, 10).until(
+
+    try:
+        # Wait for and accept alert if present
+        WebDriverWait(context.browser, 5).until(EC.alert_is_present())
+        alert = Alert(context.browser)
+        alert_text = alert.text
+        print(f"Alert appeared: {alert_text}")  # Optional: Log for debugging
+        alert.accept()
+    except:
+        print("No alert appeared after submission.")
+
+    # Now continue waiting for the page to redirect
+    WebDriverWait(context.browser, 15).until(
         EC.url_to_be(f"{BASE_URL}/userfeedback")
+    )
+
+    WebDriverWait(context.browser, 15).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "tbody tr"))
     )
 
 @then('I should see the new feedback with message "{message}" in the list')
@@ -104,7 +147,7 @@ def step_impl(context, message):
     if message not in table.text:
         context.execute_steps(f'''
             When I navigate to the new feedback form
-            And I fill in user "1", message "{message}", feedback type "suggestion"
+            And I fill in user "3", message "{message}", feedback type "suggestion"
             And I submit the feedback form
         ''')
     # After potentially adding feedback, wait for the table to update with the new entry

@@ -4,11 +4,12 @@ Feature: User Feedback Management
   So that I can manage feedback efficiently
 
   Background:
-    Given I am on the User Feedback list page
+    Given I am logged in as admin for feedbacks
+    And I am on the User Feedback list page
 
   Scenario: Add new feedback
     When I navigate to the new feedback form
-    And I fill in user "1", message "This is a test feedback", feedback type "suggestion"
+    And I fill in user "3", message "This is a test feedback", feedback type "suggestion"
     And I submit the feedback form
     Then I should see the new feedback with message "This is a test feedback" in the list
 

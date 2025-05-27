@@ -19,7 +19,7 @@ const UserFeedbackPage = () => {
     if (!window.confirm('⚠️ Are you sure you want to delete this feedback?')) return;
     try {
       await axiosClient.delete(`/userfeedback/${id}/`);
-      setFeedbacks(feedbacks.filter(fb => fb.FeedbackId !== id));
+      setFeedbacks(feedbacks.filter(fb => fb.UserFeedbackId !== id));
     } catch {
       alert('Failed to delete feedback');
     }
