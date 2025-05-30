@@ -27,7 +27,7 @@ export const Contact = (props) => {
                     <span>
                       <i className="fa fa-envelope-o"></i> Email
                     </span>
-                    luxurystep@gmail.com
+                    tradewise@gmail.com
                   </p>
                 </div>
               </div>
@@ -54,7 +54,7 @@ export const Contact = (props) => {
                   </a>
                 </li>
               </ul>
-              <p>Copyright © 2025 Luxury Step All rights reserved.</p>
+              <p>Copyright © 2025 TradeWise All rights reserved.</p>
             </div>
           </div>
         </div>

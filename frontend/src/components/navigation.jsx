@@ -37,14 +37,12 @@ export const Navigation = () => {
     <nav id="menu" className="navbar navbar-default navbar-fixed-top" style={{ minHeight: "50px", marginLeft: 0, marginRight: 0 }}>
       <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: 0 }}>
         <Link className="navbar-brand page-scroll" to="/" style={{ margin: 0, padding: "14px 0", fontWeight: 600, letterSpacing: "0.5px" }}>
-          LuxuryStep
+          TradeWise
         </Link>
         <div style={{ display: "flex", alignItems: "center" }}>
           <ul className="nav navbar-nav" style={{ marginBottom: 0, display: "flex", alignItems: "center" }}>
-            <li><a href="#features" className="page-scroll" style={{ padding: "10px 15px" }}>Features</a></li>
             <li><a href="#news" className="page-scroll" style={{ padding: "10px 15px" }}>News</a></li>
             <li><a href="#feedback" className="page-scroll" style={{ padding: "10px 15px" }}>Feedback</a></li>
-            <li><a href="#about" className="page-scroll" style={{ padding: "10px 15px" }}>About</a></li>
             {user ? (
               <>
                 <li>

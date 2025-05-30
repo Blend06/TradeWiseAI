@@ -12,10 +12,8 @@ const Homepage = () => {
     <div>
       <Navigation />
       <Header />
-      <Features />
       <News />
       <Feedback />
-      <About />
       <Contact />
     </div>
   );

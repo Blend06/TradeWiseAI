@@ -10,19 +10,13 @@ export const Header = ({ data }) => {
             <div className="row">
               <div className="col-md-8 col-md-offset-2 intro-text">
                 <h1>
-                Walk with Class. Leave a Legacy.
+                Empower Your Future. Invest in Crypto.
                   <span></span>
                 </h1>
                 <p>
-                Discover the perfect balance of comfort, elegance, and timeless fashion. Walk with confidence, leave a legacy, and redefine your style – step into sophistication today.
+                Explore the world of decentralized finance and digital assets. Take control of your wealth, embrace innovation, and be part of the financial revolution — start your crypto journey today.
                 </p>
-                <a
-                  href="#features"
-                  className="btn btn-custom btn-lg page-scroll"
-                  aria-label="Learn more about our collections"
-                >
-                  Explore Collection
-                </a>
+                
               </div>
             </div>
           </div>
